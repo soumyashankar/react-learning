@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing required data" });
     }
   
-    const apiKey = process.env.OPENAI_API_KEY; // ✅ Safe here
+    const apiKey = process.env.VITE_OPENAI_API_KEY
   
     const enrichedPrompt = `
   You are a weather assistant. The user asked: "${prompt}"
@@ -24,6 +24,7 @@ export default async function handler(req, res) {
   `;
   
     try {
+        console.log(enrichedPrompt);
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -36,7 +37,7 @@ export default async function handler(req, res) {
           max_tokens: 150,
         }),
       });
-  
+      console.log(response);
       const data = await response.json();
   
       if (data.error) {
